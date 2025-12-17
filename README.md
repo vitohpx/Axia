@@ -1,4 +1,4 @@
-# Axia Vehicle API
+# Axia Veiculos API
 
 API para gerenciamento de veículos, implementada com **.NET 8**, MediatR e arquitetura CQRS (Commands, Queries e Handlers).
 
@@ -34,7 +34,58 @@ https://localhost:7077/swagger/index.html
 
 ![Swagger UI](docs/images/swagger.png)
 
----
+## Exemplos de uso
+
+
+### Swagger - Exemplo de POST 400
+
+### Adição de item
+![Adicionar item](docs/images/add.png)
+
+```json
+{
+  "descricao": "teste descrição",
+  "marca": 1,
+  "modelo": "ka",
+  "valor": 20000
+}
+```
+
+### Adição negada
+![Exemplo de erro em POST](docs/images/swagger-post-negativo.png)
+![Adição recusada](docs/images/add-negado.png)
+
+### Atualização de item
+![Atualizar item](docs/images/update.png)
+```json
+{
+  "id": "6e26a287-f19f-4771-8b7b-9d647854c73c",
+  "descricao": "atualiza descricao e preco ",
+  "marca": 1,
+  "modelo": "ka",
+  "valor": 18000
+}
+```
+
+### Atualização negada
+![Atualização recusada](docs/images/update-not.png)
+
+### Validação de atualização
+![Validação na atualização](docs/images/update-validation.png)
+
+### Busca de itens
+![Buscar itens](docs/images/get.png)
+
+### Busca por ID
+![Buscar item por ID](docs/images/get-id.png)
+
+### Exclusão negada
+![Exclusão recusada](docs/images/delete-not.png)
+
+### Enumeração das Marcas
+![Exemplo de enumeração](docs/images/enum.png)
+
+
 
 
 Observações
