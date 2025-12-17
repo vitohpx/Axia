@@ -3,7 +3,7 @@ using Axia.Domain.Entities;
 using Axia.Domain.Error;
 using MediatR;
 
-namespace Application.Commands.ObterPorId;
+namespace Axia.Application.Queries.ObterPorId;
 
 public class ObterVeiculoPorIdHandler : IRequestHandler<ObterVeiculoPorIdCommand, Veiculo?>
 {

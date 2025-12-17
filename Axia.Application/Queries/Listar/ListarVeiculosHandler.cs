@@ -2,7 +2,7 @@ using Axia.Application.Services.Interfaces;
 using Axia.Domain.Entities;
 using MediatR;
 
-namespace Application.Commands.Listar;
+namespace Axia.Application.Queries.Listar;
 
 public class ListarVeiculosHandler : IRequestHandler<ListarVeiculosCommand, IEnumerable<Veiculo>>
 {

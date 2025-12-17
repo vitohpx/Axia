@@ -1,10 +1,11 @@
 ﻿using Application.Commands.Atualizar;
 using Application.Commands.Excluir;
-using Application.Commands.Listar;
-using Application.Commands.ObterPorId;
+using Axia.Application.Queries.Listar;
+using Axia.Application.Queries.ObterPorId;
 using Axia.Application.Commands.Adicionar;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Axia.API.Controllers
 {
@@ -19,78 +20,54 @@ namespace Axia.API.Controllers
             _mediator = mediator;
         }
 
-        /// <summary>
-        /// Cadastra um novo veículo
-        /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post(
-            [FromBody] AdicionarVeiculoCommand command)
+        [SwaggerOperation(
+            Summary = "Cadastra um novo veículo",
+            Description = "Recebe os dados do veículo e cadastra no sistema, retornando o Id gerado.")]
+        public async Task<IActionResult> Post([FromBody] AdicionarVeiculoCommand command)
         {
-
             var id = await _mediator.Send(command);
-
-            return CreatedAtAction(
-                nameof(GetById),
-                new { id },
-                null
-            );
+            return CreatedAtAction(nameof(GetById), new { id }, null);
         }
 
-        /// <summary>
-        /// Atualiza um veículo existente
-        /// </summary>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Put(
-            [FromBody] AtualizarVeiculoCommand command)
+        [SwaggerOperation(Summary = "Atualiza um veículo existente")]
+        public async Task<IActionResult> Put([FromBody] AtualizarVeiculoCommand command)
         {
             await _mediator.Send(command);
             return NoContent();
         }
 
-        /// <summary>
-        /// Consulta um veículo por Id
-        /// </summary>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [SwaggerOperation(Summary = "Consulta um veículo por Id")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var result = await _mediator.Send(
-                new ObterVeiculoPorIdCommand(id));
-
-            if (result is null)
-                return NotFound();
-
+            var result = await _mediator.Send(new ObterVeiculoPorIdCommand(id));
+            if (result is null) return NotFound();
             return Ok(result);
         }
 
-        /// <summary>
-        /// Lista todos os veículos
-        /// </summary>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [SwaggerOperation(Summary = "Lista todos os veículos")]
         public async Task<IActionResult> Get()
         {
-            var result = await _mediator.Send(
-                new ListarVeiculosCommand());
-
+            var result = await _mediator.Send(new ListarVeiculosCommand());
             return Ok(result);
         }
 
-        /// <summary>
-        /// Remove um veículo
-        /// </summary>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [SwaggerOperation(Summary = "Remove um veículo")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _mediator.Send(
-                new ExcluirVeiculoCommand(id));
-
+            await _mediator.Send(new ExcluirVeiculoCommand(id));
             return NoContent();
         }
     }

@@ -1,6 +1,6 @@
 using Axia.Domain.Entities;
 using MediatR;
 
-namespace Application.Commands.Listar;
+namespace Axia.Application.Queries.Listar;
 
 public record ListarVeiculosCommand() : IRequest<IEnumerable<Veiculo>>;

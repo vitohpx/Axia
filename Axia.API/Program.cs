@@ -23,6 +23,7 @@ builder.Services.AddSwaggerGen(c =>
         Title = "Axia API",
         Version = "v1"
     });
+    c.EnableAnnotations();
 });
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
