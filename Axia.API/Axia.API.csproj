@@ -1,18 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Controllers\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Axia.Core\Axia.Domain.csproj" />
-    <ProjectReference Include="..\Axia.Infrastructure\Axia.Infrastructure.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Axia.Domain\Axia.Domain.csproj" />
+		<ProjectReference Include="..\Axia.Infrastructure\Axia.Infrastructure.csproj" />
+		<ProjectReference Include="..\Axia.Application\Axia.Application.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.22" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
+	</ItemGroup>
 
 </Project>

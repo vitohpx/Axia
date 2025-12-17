@@ -18,9 +18,10 @@ namespace Axia.Application.Services
             _repository = repository;
         }
 
-        public async Task AddAsync(Veiculo veiculo)
+        public async Task<Guid> AddAsync(Veiculo veiculo)
         {
             await _repository.AddAsync(veiculo);
+            return veiculo.Id;
         }
 
         public async Task UpdateAsync(Veiculo veiculo)

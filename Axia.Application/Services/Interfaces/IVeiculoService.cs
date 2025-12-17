@@ -9,7 +9,7 @@ namespace Axia.Application.Services.Interfaces
 {
     public interface IVeiculoService
     {
-        Task AddAsync(Veiculo veiculo);
+        Task<Guid> AddAsync(Veiculo veiculo);
         Task UpdateAsync(Veiculo veiculo);
         Task<Veiculo?> GetByIdAsync(Guid id);
         Task<IEnumerable<Veiculo>> GetAllAsync();

@@ -1,42 +1,53 @@
+using Axia.API.Middlewares;
+using Axia.Application;
+using Axia.Application.Behaviors;
+using Axia.Application.Services;
+using Axia.Application.Services.Interfaces;
 using Axia.Domain.Repositories;
 using Axia.Infra.Context;
+using FluentValidation;
 using Infra.Repository;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
-public class Program
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
 {
-    private static void Main(string[] args)
+    c.SwaggerDoc("v1", new OpenApiInfo
     {
-        var builder = WebApplication.CreateBuilder(args);
+        Title = "Axia API",
+        Version = "v1"
+    });
+});
 
+builder.Services.AddDbContext<AppDbContext>(opt =>
+    opt.UseInMemoryDatabase("AxiaDB"));
 
-        builder.Services.AddControllers();
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(cfg =>
+    cfg.RegisterServicesFromAssembly(typeof(AssemblyReference).Assembly));
 
+builder.Services.AddValidatorsFromAssembly(typeof(AssemblyReference).Assembly);
+builder.Services.AddTransient(
+    typeof(IPipelineBehavior<,>),
+    typeof(ValidationBehavior<,>));
 
-        builder.Services.AddDbContext<AppDbContext>(opt =>
-        opt.UseInMemoryDatabase("AxiaDB"));
+builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 
+var app = builder.Build();
 
-        builder.Services.AddMediatR(cfg =>
-        cfg.RegisterServicesFromAssembly(typeof(AdicionarVeiculoCommand).Assembly));
+app.UseMiddleware<ExceptionMiddleware>();
 
+app.UseSwagger();
+app.UseSwaggerUI();
 
-        builder.Services.AddValidatorsFromAssemblyContaining<VeiculoValidator>();
+app.UseHttpsRedirection();
+app.UseAuthorization();
 
-
-        builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
-
-
-        var app = builder.Build();
-
-
-        app.UseSwagger();
-        app.UseSwaggerUI();
-
-
-        app.UseAuthorization();
-        app.MapControllers();
-        app.Run();
-    }
-}
+app.MapControllers();
+app.Run();
