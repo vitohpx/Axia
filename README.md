@@ -20,11 +20,11 @@ API para gerenciamento de veículos, implementada com **.NET 8**, MediatR e arqu
 1. Clone o repositório:
    ```bash
    git clone https://github.com/vitohpx/Axia.git
-   cd Axia
+   cd Axia/Axia.API
 
 2. dotnet restore
 
-3. dotnet run
+3. dotnet run --launch-profile https
 
 4. Acessar a documentação e testar os endpoints via Swagger em:
 https://localhost:7077/swagger/index.html
